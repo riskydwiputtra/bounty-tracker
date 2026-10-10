@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bug Bounty Tracker</title>
-    <!-- Kamu bisa menambahkan style CSS kamu sendiri di sini jika perlu -->
     <style>
         body { font-family: sans-serif; background-color: #f4f4f9; color: #333; padding: 20px; }
         #loading { color: #888; font-style: italic; }
@@ -15,19 +14,13 @@
 
     <h1>Dashboard Tracker</h1>
     
-    <!-- Area ini akan dirender dengan UI dari Moda -->
     <div id="tempat-ui-bounty">
         <p id="loading">Memuat desain dari Moda...</p>
     </div>
 
-    <!-- Script API -->
     <script>
-        // 1. Ganti dengan ID Canvas lo yang asli (ambil dari URL Moda)
         const canvasId = '1b2b4af2-930e-56c5-83da-9d612fbf9de8'; 
-        
-        // 2. Ganti dengan API Key lo
-        const apiKey = 'moda_live_19fd786d45135c255896628fe92f9a1cd83b7916941739c331c3d72cee7fee18
-'; 
+        const apiKey = 'moda_live_19fd786d45135c255896628fe92f9a1cd83b7916941739c331c3d72cee7fee18'; 
         
         const apiUrl = `https://api.moda.app/v1/canvases/${canvasId}`;
         const wadahUI = document.getElementById('tempat-ui-bounty');
@@ -36,7 +29,7 @@
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${apiKey}`,
-                'Moda-Version': '2026-05-01', // Wajib disertakan sesuai docs
+                'Moda-Version': '2026-05-01',
                 'Content-Type': 'application/json'
             }
         })
@@ -47,16 +40,9 @@
             return response.json();
         })
         .then(data => {
-            // Karena Moda merespons dengan markdown/pseudo-HTML di field "design"
-            // Kita harus mencetak isi dari field tersebut.
-            
-            console.log("Response lengkap dari Moda:", data); // Untuk debugging
+            console.log("Response lengkap dari Moda:", data);
             
             if (data.design) {
-                // Bergantung pada bentuk pasti dari "design" (apakah Markdown atau HTML jadi), 
-                // ini akan merender teks tersebut. Jika formatnya markdown, lo butuh library seperti "marked.js" 
-                // untuk mengubahnya jadi HTML. Untuk saat ini, kita inject langsung.
-                
                 wadahUI.innerHTML = data.design; 
             } else {
                 wadahUI.innerHTML = "<p>Data UI tidak ditemukan di Canvas ini.</p>";
